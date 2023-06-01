@@ -1,16 +1,14 @@
 package com.will.dev.aula_54;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.will.dev.exceptions.UnsupportedMathOperationExeception;
+
 @RestController
 public class MathController {
-
-	private final AtomicLong counter = new AtomicLong();
 	
 	@RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method=RequestMethod.GET)
 	public Double sum(
@@ -18,7 +16,7 @@ public class MathController {
 		@PathVariable(value = "numberTwo") String numberTwo) throws Exception
 	{
 		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new Exception();
+			throw new UnsupportedMathOperationExeception("Please set a numeric value!");
 		}
 		return (convertToDouble(numberOne) + convertToDouble(numberTwo));
 	}
